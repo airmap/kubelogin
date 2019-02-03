@@ -37,7 +37,6 @@ func (c *Config) GetTokenSet(ctx context.Context) (*TokenSet, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Could not discovery the OIDC issuer: %s", err)
 	}
-	c.ExtraScopes = append(c.ExtraScopes, "groups")
 	flow := oauth2cli.AuthCodeFlow{
 		Config: oauth2.Config{
 			Endpoint:     provider.Endpoint(),

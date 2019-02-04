@@ -52,10 +52,14 @@ func (c *Config) GetTokenSet(ctx context.Context) (*TokenSet, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Could not get a token: %s", err)
 	}
-	idToken, ok := token.Extra("id_token").(string)
-	if !ok {
+	// idToken, ok := token.IdToken
+	// if !ok {
+	// 	return nil, fmt.Errorf("id_token is missing in the token response: %s", token)
+	// }
+	if token.IdToken == "" {
 		return nil, fmt.Errorf("id_token is missing in the token response: %s", token)
 	}
+	idToken := token.IdToken
 	verifier := provider.Verifier(&oidc.Config{ClientID: c.ClientID})
 	verifiedIDToken, err := verifier.Verify(ctx, idToken)
 	if err != nil {
